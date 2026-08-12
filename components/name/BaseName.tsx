@@ -91,30 +91,18 @@ export default function BaseName(){
             WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 80%, transparent 100%)"
         }}
       >
-        <div className="absolute inset-0">
-          <ShaderBackground />
-        </div>
 
         <div className="absolute inset-0 image-shader-wrapper">
           <ImageShader />
+        </div>
+        <div className="absolute inset-0 mix-blend-screen">
+          <ShaderBackground />
         </div>
 
       </div>
 
       <div className="base-name w-full h-dvh flex flex-col items-center justify-center absolute">
 
-        {/* <div className="explore-btn animate-bounce absolute mix-blend-difference">
-
-        <button
-            onClick={() => {
-                document.getElementById("haha")?.scrollIntoView({ behavior: "smooth" })
-            }}
-            className="circle-down w-16 h-16 text-neutral-50 flex justify-center items-center border-2 border-neutral-50 rounded-full"
-        >
-            <ArrowDown size={30}/>
-        </button>
-
-        </div> */}
 
         <div className="base-name-inner font-primary flex items-center justify-center text-[80px] gap-x-10 tracking-tighter">
 

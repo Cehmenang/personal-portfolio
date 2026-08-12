@@ -1,12 +1,20 @@
-"use client"
+import ExperienceDetailView from "@/components/works/experience/ExperienceDetailView";
+import { EXPERIENCES } from "@/libs/works";
+import { notFound } from "next/navigation";
 
-import { useParams } from "next/navigation"
+export function generateStaticParams() {
+  return EXPERIENCES.map((exp) => ({ slug: exp.slug }));
+}
 
-export default function SingleWork(){
-    const {slug} = useParams() as { slug: string }
-    return (
-        <div className="bg-work bg-neutral-950 text-neutral-50 h-dvh">
-            <h1>HAI {slug}</h1>
-        </div>
-    )
+// Next.js 15: `params` di dynamic route sekarang Promise — wajib di-await.
+export default async function ExperienceDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const exp = EXPERIENCES.find((e) => e.slug === slug);
+  if (!exp) notFound();
+
+  return <ExperienceDetailView exp={exp} />;
 }

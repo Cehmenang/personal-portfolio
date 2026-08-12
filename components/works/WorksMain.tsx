@@ -12,10 +12,12 @@ gsap.registerPlugin(ScrollTrigger);
 type FilterTab = "All" | "Website" | "Graphic Design" | "Video Editing";
 
 const CATEGORIES: FilterTab[] = ["Website", "Graphic Design", "Video Editing"];
+const ITEMS_PER_PAGE = 6;
 
 export default function WorksMain() {
   const [activeTab, setActiveTab] = useState<FilterTab>("All");
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -28,9 +30,10 @@ export default function WorksMain() {
   const switchTab = (tab: FilterTab) => {
     setActiveTab(tab);
     setLightboxIdx(null);
+    setCurrentPage(1);
   };
 
-  /* header + background label dekoratif — reveal replay tiap scroll masuk/keluar, dua arah */
+  /* header + background label dekoratif */
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(".works-eyebrow, .works-title", {
@@ -65,8 +68,7 @@ export default function WorksMain() {
     return () => ctx.revert();
   }, []);
 
-  /* reveal item yang lagi tampil — replay tiap scroll masuk/keluar viewport, dua arah.
-     Re-run tiap activeTab berganti karena isi DOM-nya beda. */
+  /* reveal item yang lagi tampil */
   useLayoutEffect(() => {
     const items = gsap.utils.toArray<HTMLElement>(
       contentRef.current?.querySelectorAll(".reveal-item") ?? []
@@ -86,7 +88,7 @@ export default function WorksMain() {
     }, contentRef);
 
     return () => ctx.revert();
-  }, [activeTab]);
+  }, [activeTab, currentPage]);
 
   /* lock scroll halaman utama selama lightbox kebuka */
   useEffect(() => {
@@ -99,13 +101,20 @@ export default function WorksMain() {
     }
   }, [lightboxIdx]);
 
+  // Kalkulasi Pagination untuk Graphic Design
+  const totalDesignPages = Math.ceil(designItems.length / ITEMS_PER_PAGE);
+  const currentDesignItems = designItems.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
   return (
     <section
       ref={sectionRef}
       id="work"
       className="relative w-full bg-neutral-950 text-neutral-50 px-6 md:px-12 py-24 md:py-32 overflow-hidden font-[var(--font-second)]"
     >
-      {/* decorative background category stack — hidden on small screens */}
+      {/* decorative background category stack */}
       <div
         ref={bgLabelsRef}
         aria-hidden="true"
@@ -137,7 +146,7 @@ export default function WorksMain() {
         </h2>
       </div>
 
-      {/* menu — global, tetep 4 tab */}
+      {/* menu */}
       <div className="relative z-10 flex flex-wrap gap-3 mb-10 md:mb-14">
         {(["All", "Website", "Graphic Design", "Video Editing"] as FilterTab[]).map((tab) => (
           <button
@@ -155,7 +164,7 @@ export default function WorksMain() {
       </div>
 
       <div ref={contentRef} className="relative z-10">
-        {/* ALL — list company/experience, klik pindah ke /work/[slug] */}
+        {/* ALL */}
         {activeTab === "All" && (
           <div className="border-t border-neutral-800">
             {EXPERIENCES.map((exp, idx) => (
@@ -164,7 +173,7 @@ export default function WorksMain() {
           </div>
         )}
 
-        {/* WEBSITE — agregat dari semua experience, klik pindah ke /work/website/[slug] */}
+        {/* WEBSITE */}
         {activeTab === "Website" && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-950">
             {websiteItems.length === 0 && <EmptyState label="website" />}
@@ -172,7 +181,8 @@ export default function WorksMain() {
               <Link
                 key={site.slug}
                 href={`/work/website/${site.slug}`}
-                className="reveal-item group relative block bg-neutral-950 aspect-[4/3] overflow-hidden"
+                // Di sini class aspect-[4/3] diubah menjadi aspect-video (16:9)
+                className="reveal-item group relative block bg-neutral-950 aspect-video overflow-hidden"
               >
                 {site.image[0] && (
                   <Image
@@ -196,34 +206,68 @@ export default function WorksMain() {
           </div>
         )}
 
-        {/* GRAPHIC DESIGN — agregat dari semua experience, lightbox in-page (belum ada slug) */}
+        {/* GRAPHIC DESIGN */}
         {activeTab === "Graphic Design" && (
           <>
-            {designItems.length === 0 && <EmptyState label="graphic design" />}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-neutral-950">
-              {designItems.map((d, idx) => (
-                <button
-                  key={`${d.companySlug}-${d.image}`}
-                  onClick={() => setLightboxIdx(idx)}
-                  className="reveal-item relative aspect-square bg-neutral-950 overflow-hidden group"
-                >
-                  <Image
-                    src={d.image}
-                    alt={`${d.company} design ${idx + 1}`}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 33vw"
-                    className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                  />
-                  <div className="absolute inset-0 flex items-end bg-neutral-900/0 group-hover:bg-neutral-900/50 transition-colors duration-500 p-3 opacity-0 group-hover:opacity-100">
-                    <span className="text-xs uppercase tracking-wider">{d.company}</span>
+            {designItems.length === 0 ? (
+              <EmptyState label="graphic design" />
+            ) : (
+              <>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-neutral-950">
+                  {currentDesignItems.map((d, idx) => {
+                    const realIdx = (currentPage - 1) * ITEMS_PER_PAGE + idx;
+                    
+                    return (
+                      <button
+                        key={`${d.companySlug}-${d.image}-${realIdx}`}
+                        onClick={() => setLightboxIdx(realIdx)}
+                        className="reveal-item relative aspect-square bg-neutral-950 overflow-hidden group"
+                      >
+                        <Image
+                          src={d.image}
+                          alt={`${d.company} design ${realIdx + 1}`}
+                          fill
+                          sizes="(max-width: 768px) 50vw, 33vw"
+                          className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                        />
+                        <div className="absolute inset-0 flex items-end bg-neutral-900/0 group-hover:bg-neutral-900/50 transition-colors duration-500 p-3 opacity-0 group-hover:opacity-100">
+                          <span className="text-xs uppercase tracking-wider">{d.company}</span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Pagination Controls */}
+                {totalDesignPages > 1 && (
+                  <div className="flex items-center justify-center gap-4 mt-12 mb-4">
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      disabled={currentPage === 1}
+                      className="px-4 py-2 text-sm font-medium border border-neutral-700 rounded-full transition-colors disabled:opacity-30 disabled:cursor-not-allowed hover:bg-neutral-50 hover:text-neutral-900"
+                    >
+                      Prev
+                    </button>
+                    
+                    <span className="text-sm text-neutral-400 font-medium tracking-widest">
+                      {currentPage} <span className="mx-1">/</span> {totalDesignPages}
+                    </span>
+                    
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.min(totalDesignPages, p + 1))}
+                      disabled={currentPage === totalDesignPages}
+                      className="px-4 py-2 text-sm font-medium border border-neutral-700 rounded-full transition-colors disabled:opacity-30 disabled:cursor-not-allowed hover:bg-neutral-50 hover:text-neutral-900"
+                    >
+                      Next
+                    </button>
                   </div>
-                </button>
-              ))}
-            </div>
+                )}
+              </>
+            )}
           </>
         )}
 
-        {/* VIDEO EDITING — agregat dari semua experience, link keluar ke Drive */}
+        {/* VIDEO EDITING */}
         {activeTab === "Video Editing" && (
           <div className="border-t border-neutral-800">
             {videoItems.length === 0 && <EmptyState label="video editing" />}
@@ -262,7 +306,6 @@ export default function WorksMain() {
             ✕
           </button>
 
-          {/* stopPropagation biar klik di area gambar gak ikut nutup lightbox */}
           <div
             className="relative w-[90vw] h-[85vh] max-w-5xl"
             onClick={(e) => e.stopPropagation()}
@@ -285,11 +328,6 @@ export default function WorksMain() {
 function EmptyState({ label }: { label: string }) {
   return <p className="text-neutral-500 text-sm py-10">Belum ada karya di kategori {label}.</p>;
 }
-
-/* -------------------------------------------------------------------------- */
-/*  ROW — "My Works" list, hover invert full-GSAP biar semua property (bg,    */
-/*  warna teks, padding) animate bareng dan nggak kerasa patah-patah.         */
-/* -------------------------------------------------------------------------- */
 
 function ExperienceRow({
   exp,

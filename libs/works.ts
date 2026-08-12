@@ -29,7 +29,7 @@ export const EXPERIENCES: Experience[] = [
     slug: "personal",
     role: "I Do What I Like",
     year: "School — Present",
-    description: "",
+    description: "A place where I spent countless hours learning and experimenting, constantly refining my craft while building a portfolio of work I could be proud of.",
     websites: [
       {
         name: "Belajar Aja",
@@ -61,7 +61,7 @@ export const EXPERIENCES: Experience[] = [
     slug: "bandar-musik-jakarta",
     role: "Full Stack Developer",
     year: "2024 - Present",
-    description: "Membangun e-commerce untuk toko alat musik dari nol.",
+    description: "I wore two hats that rarely meet in one role. On the creative side, I led video production for TikTok and Instagram — shaping raw ideas into concepts, then bringing them to life through editing, color grading, and audio mixing, always with an eye for storytelling that actually holds attention. On the technical side, I took on building the company's website entirely from scratch, using Laravel, React, TypeScript, and MySQL, and saw it through to full deployment — managing servers, optimizing performance, and wiring up API integrations along the way. The result was a role that blended visual creativity with full-stack engineering, giving me a rare, well-rounded perspective on how content and technology come together.",
     websites: [
       {
         name: "Bandar Musik Jakarta",
