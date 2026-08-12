@@ -6,9 +6,21 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useEffect, useRef } from "react"
 
 const abouts = [
-  "I'm Cehwin, a fullstack developer who likes understanding the full picture before writing a single line of code. I'm the type who'll dig into an edge case until it actually makes sense, not just until it stops throwing errors — debugging is half the job, and I don't mind spending time there.",
-  "I work best with a clear structure: separating concerns properly, keeping frontend and backend decoupled, and building things in a way my future self won't hate. I lean toward simplicity over cleverness, and I'd rather ship something solid than something flashy that breaks in three months.",
-  "I pick up new things fast, and I'm currently diving into AI integration — exploring RAG pipelines and how they can fit into real, production-level applications. Curious by nature, comfortable moving between frontend and backend, and always down to learn a new tool if it genuinely solves a problem."
+  {
+    number: "01",
+    label: "Approach",
+    text: "I'm Cehwin, a fullstack developer who likes understanding the full picture before writing a single line of code. I'm the type who'll dig into an edge case until it actually makes sense, not just until it stops throwing errors — debugging is half the job, and I don't mind spending time there.",
+  },
+  {
+    number: "02",
+    label: "Structure",
+    text: "I work best with a clear structure: separating concerns properly, keeping frontend and backend decoupled, and building things in a way my future self won't hate. I lean toward simplicity over cleverness, and I'd rather ship something solid than something flashy that breaks in three months.",
+  },
+  {
+    number: "03",
+    label: "Curiosity",
+    text: "I pick up new things fast, and I'm currently diving into AI integration — exploring RAG pipelines and how they can fit into real, production-level applications. Curious by nature, comfortable moving between frontend and backend, and always down to learn a new tool if it genuinely solves a problem.",
+  },
 ]
 
 gsap.registerPlugin(SplitText, ScrollTrigger)
@@ -50,13 +62,27 @@ export default function AboutText() {
   }, [])
 
   return (
-    <div ref={containerRef} className="flex flex-col gap-y-10">
+    <div ref={containerRef} className="flex flex-col">
       {abouts.map((abt, idx) => (
-        <p
+        <div
           key={idx}
-          className="split text-justify text-[24px] font-primary tracking-tight text-neutral-50">
-          {abt}
-        </p>
+          className={`flex flex-col sm:flex-row gap-4 sm:gap-8 py-8 md:py-10 ${
+            idx !== 0 ? "border-t border-neutral-800" : ""
+          }`}
+        >
+          <div className="flex sm:flex-col items-baseline sm:items-start gap-3 sm:gap-1 shrink-0 sm:w-24">
+            <span className="font-primary font-extrabold text-lg text-neutral-600">
+              {abt.number}
+            </span>
+            <span className="text-xs uppercase tracking-wider text-neutral-400">
+              {abt.label}
+            </span>
+          </div>
+
+          <p className="split font-second text-base md:text-lg leading-relaxed text-neutral-200 tracking-tight max-w-2xl">
+            {abt.text}
+          </p>
+        </div>
       ))}
     </div>
   )
