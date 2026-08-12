@@ -10,16 +10,19 @@ const abouts = [
     number: "01",
     label: "Approach",
     text: "I'm Cehwin, a fullstack developer who likes understanding the full picture before writing a single line of code. I'm the type who'll dig into an edge case until it actually makes sense, not just until it stops throwing errors — debugging is half the job, and I don't mind spending time there.",
+    offset: "",
   },
   {
     number: "02",
     label: "Structure",
     text: "I work best with a clear structure: separating concerns properly, keeping frontend and backend decoupled, and building things in a way my future self won't hate. I lean toward simplicity over cleverness, and I'd rather ship something solid than something flashy that breaks in three months.",
+    offset: "md:mt-16 md:pl-10",
   },
   {
     number: "03",
     label: "Curiosity",
     text: "I pick up new things fast, and I'm currently diving into AI integration — exploring RAG pipelines and how they can fit into real, production-level applications. Curious by nature, comfortable moving between frontend and backend, and always down to learn a new tool if it genuinely solves a problem.",
+    offset: "md:mt-6 md:pl-4",
   },
 ]
 
@@ -62,13 +65,11 @@ export default function AboutText() {
   }, [])
 
   return (
-    <div ref={containerRef} className="flex flex-col">
+    <div ref={containerRef} className="flex flex-col gap-y-14 md:gap-y-6">
       {abouts.map((abt, idx) => (
         <div
           key={idx}
-          className={`flex flex-col sm:flex-row gap-4 sm:gap-8 py-8 md:py-10 ${
-            idx !== 0 ? "border-t border-neutral-800" : ""
-          }`}
+          className={`flex flex-col sm:flex-row gap-4 sm:gap-8 max-w-2xl ${abt.offset}`}
         >
           <div className="flex sm:flex-col items-baseline sm:items-start gap-3 sm:gap-1 shrink-0 sm:w-24">
             <span className="font-primary font-extrabold text-lg text-neutral-600">
@@ -79,7 +80,7 @@ export default function AboutText() {
             </span>
           </div>
 
-          <p className="split font-second text-base md:text-lg leading-relaxed text-neutral-200 tracking-tight max-w-2xl">
+          <p className="split text-justify font-second text-base md:text-lg leading-relaxed text-neutral-200 tracking-tight">
             {abt.text}
           </p>
         </div>
