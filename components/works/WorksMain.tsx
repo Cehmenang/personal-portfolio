@@ -112,7 +112,7 @@ export default function WorksMain() {
     <section
       ref={sectionRef}
       id="work"
-      className="relative w-full bg-neutral-950 text-neutral-50 px-6 md:px-12 py-24 md:py-32 overflow-hidden font-[var(--font-second)]"
+      className="relative w-full bg-neutral-950 text-neutral-50 px-6 md:px-12 py-24 md:py-32 overflow-hidden font-[var(--font-second)] h-[2000px]"
     >
       {/* decorative background category stack */}
       <div

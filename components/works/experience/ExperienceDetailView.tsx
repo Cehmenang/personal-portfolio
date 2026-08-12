@@ -95,10 +95,10 @@ export default function ExperienceDetailView({ exp }: { exp: Experience }) {
       className="w-full bg-neutral-950 text-neutral-50 px-6 md:px-12 py-24 md:py-32 font-[var(--font-second)]"
     >
       <Link
-        href="/work"
+        href="/"
         className="ed-back inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-neutral-50 transition-colors"
       >
-        ← All Work
+        ← Back
       </Link>
 
       <div className="mt-8 mb-6">
@@ -112,7 +112,7 @@ export default function ExperienceDetailView({ exp }: { exp: Experience }) {
         <span className="ed-meta text-sm uppercase tracking-wider text-neutral-600">{exp.year}</span>
       </div>
 
-      <p className="ed-description text-neutral-300 text-lg leading-relaxed max-w-2xl mb-20">
+      <p className="ed-description text-neutral-300 text-lg leading-relaxed w-full md:w-[90%] text-justify mb-20">
         {exp.description}
       </p>
 
