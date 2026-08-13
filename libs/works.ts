@@ -70,7 +70,7 @@ export const EXPERIENCES: Experience[] = [
         summary: "Bandar Musik Jakarta is an e-commerce site I built for a music instrument store, carrying around 10,000 products. It's built with Laravel on the backend and Next.js on the frontend, styled with Tailwind CSS using a custom theme, clean white/slate cards, and amber/red accents.Key features include detailed product pages with specs and embedded videos, brand filtering, an admin upload system, shipping cost integration (RajaOngkir/Komerce), Accurate Online for accounting, and SEO essentials like structured data and a dynamic sitemap. It's also optimized with Redis caching and fronted by Cloudflare for performance and security.\n\nBasically, it's a full online storefront built to give the store real e-commerce capability, from browsing to checkout to backend management.",
         stack: [
           "Laravel",
-          "Next.js",
+          "NextJS",
           "Tailwind CSS",
           "TypeScript",
           "MySQL",
@@ -88,6 +88,34 @@ export const EXPERIENCES: Experience[] = [
           "/works/BMJ/BMJPreview5.webp",
         ],
         feature: "Product catalog browsing, detailed product specs, embedded product videos, product filtering, admin product upload, shipping cost calculator, accounting integration, Realtime Search, SEO optimization, dynamic sitemap, FAQ accordion, related products carousel, milestone counter, backend caching, Cloudflare security, Multirole Access, Guest Wishlist, Last View Product, CRUD Admin",
+      },
+      {
+        name: "Net Musik",
+        slug: "net-musik",
+        url: "https://net.bandarmusikjakarta.com",
+        summary: "Net Musik is an e-commerce platform for musical instrument sales, built with a decoupled full-stack architecture: a NestJS backend (Prisma ORM + PostgreSQL) and a Next.js frontend. It features JWT-based authentication with httpOnly cookies, an admin dashboard for product management (with automatic image conversion to WebP on upload), and role-based access control via Next.js middleware.\n\nOn the customer side, there's a complete checkout flow — from selecting cart items, entering a shipping address, and choosing a payment method (bank transfer or COD), to an order summary and confirmation page. Shipping cost is currently a flat-rate placeholder, pending future integration with RajaOngkir/Komerce.",
+        stack: [
+          "NestJS",
+          "NextJS",
+          "Tailwind CSS",
+          "TypeScript",
+          "Prisma",
+          "PostgreSQL",
+          "Nginx",
+          "JWT",
+          "Multer",
+          "Redis",
+          "GSAP",
+          "Hostinger"
+        ],
+        image: [
+          "/works/BMJ/BMJPreview.webp",
+          "/works/BMJ/BMJPreview2.webp",
+          "/works/BMJ/BMJPreview3.webp",
+          "/works/BMJ/BMJPreview4.webp",
+          "/works/BMJ/BMJPreview5.webp",
+        ],
+        feature: "Auth: JWT via httpOnly cookies + Passport, CORS with credentials, Image upload using Multer + sharp (convert to WebP), Product data model using native PostgreSQL string arrays, Order/create endpoint for checkout process, Admin dashboard: login form, product upload form, monochrome UI with GSAP animations, Next.js middleware for role-based route protection (including RSC/Server Action edge cases), Product creation flow: after POST, calls revalidateProducts() + router.push/router.refresh() to return to product list, Customer checkout page: select cart items via sessionStorage, recipient address form, payment method (bank transfer/COD), order summary with flat-rate shipping (placeholder pending RajaOngkir/Komerce integration)",
       },
     ],
     designs: [

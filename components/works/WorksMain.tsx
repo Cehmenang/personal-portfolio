@@ -220,7 +220,7 @@ export default function WorksMain() {
                     return (
                       <button
                         key={`${d.companySlug}-${d.image}-${realIdx}`}
-                        onClick={() => setLightboxIdx(realIdx)}
+                        // onClick={() => setLightboxIdx(realIdx)}
                         className="reveal-item relative aspect-square bg-neutral-950 overflow-hidden group"
                       >
                         <Image

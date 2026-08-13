@@ -9,21 +9,15 @@ const abouts = [
   {
     number: "01",
     label: "Approach",
-    text: "I'm Cehwin, a fullstack developer who likes understanding the full picture before writing a single line of code. I'm the type who'll dig into an edge case until it actually makes sense, not just until it stops throwing errors — debugging is half the job, and I don't mind spending time there.",
-    offset: "left-0 top-0",
+    text: "As a Full-stack Developer specializing in the JavaScript/TypeScript ecosystem, React, Next.js, and Laravel, I build scalable end-to-end web applications. I focus on clean architecture and seamless separation of concerns, managing everything from REST APIs and MySQL databases to complex integrations like authentication and payment gateways.",
+    offset: "",
   },
   {
     number: "02",
-    label: "Structure",
-    text: "I work best with a clear structure: separating concerns properly, keeping frontend and backend decoupled, and building things in a way my future self won't hate. I lean toward simplicity over cleverness, and I'd rather ship something solid than something flashy that breaks in three months.",
-    offset: "left-[50%] top-[50%]",
-  },
-  {
-    number: "03",
-    label: "Curiosity",
-    text: "I pick up new things fast, and I'm currently diving into AI integration — exploring RAG pipelines and how they can fit into real, production-level applications. Curious by nature, comfortable moving between frontend and backend, and always down to learn a new tool if it genuinely solves a problem.",
-    offset: "right-0 bottom-0",
-  },
+    label: "Develop",
+    text: "I prioritize understanding the big picture before coding, favoring simple, maintainable solutions over fragile workarounds. Adaptable and meticulous in debugging, I thrive both independently and in teams, and I am currently expanding my skill set by integrating AI and RAG pipelines into production-ready systems.",
+    offset: "ml-10",
+  }
 ]
 
 gsap.registerPlugin(SplitText, ScrollTrigger)
@@ -65,13 +59,13 @@ export default function AboutText() {
   }, [])
 
   return (
-    <div ref={containerRef} className="flex flex-col gap-y-14 md:gap-y-6 relative">
+    <div ref={containerRef} className="flex flex-col gap-y-14 md:gap-y-6">
       {abouts.map((abt, idx) => (
         <div
           key={idx}
-          className={`flex flex-col sm:flex-row gap-4 sm:gap-8 absolute ${abt.offset} right-0`}
+          className={`flex flex-col sm:flex-row gap-4 sm:gap-8 ${abt.offset}`}
         >
-          <p className="split text-justify font-second text-base md:text-[22px] leading-relaxed text-neutral-400 tracking-tight">
+          <p className="split text-justify font-second text-base md:text-[20px] leading-loose text-neutral-400 tracking-tight">
             {abt.text}
           </p>
         </div>

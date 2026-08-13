@@ -9,7 +9,7 @@ export default function Main(){
     <div className="main flex flex-col gap-y-40 bg-neutral-950 text-neutral-50">
       <Navbar/>
       <BaseName/>
-      {/* <AboutSection/> */}
+      <AboutSection/>
       <WorksMain/>
     </div>
   )

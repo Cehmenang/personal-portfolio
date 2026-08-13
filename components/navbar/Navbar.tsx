@@ -8,9 +8,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const NAV_LINKS = [
-  { label: "Work", href: "/#work" },
   { label: "About", href: "/#about" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Work", href: "/#work" },
 ];
 
 const HIDE_AFTER_PX = 80; // baru mulai sembunyi setelah scroll sejauh ini
