@@ -3,6 +3,9 @@
 import { useRef, useEffect, useState, useLayoutEffect } from "react";
 import Link from "next/link";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const NAV_LINKS = [
   { label: "Work", href: "/#work" },
@@ -14,57 +17,52 @@ const HIDE_AFTER_PX = 80; // baru mulai sembunyi setelah scroll sejauh ini
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
-  const lastScrollY = useRef(0);
   const isHidden = useRef(false);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  /* hide/show navbar ngikutin arah scroll */
+  /* hide/show navbar — pakai ScrollTrigger (nyatu ke ticker yang sama dengan
+     ScrollTrigger lain di halaman, misal parallax shader di Hero), bukan
+     window scroll listener terpisah — biar update-nya sinkron & nggak jank. */
   useEffect(() => {
-    lastScrollY.current = window.scrollY;
+    const st = ScrollTrigger.create({
+      start: 0,
+      end: "max",
+      onUpdate: (self) => {
+        if (isMenuOpen) return; // jangan disembunyiin pas menu mobile lagi kebuka
 
-    const handleScroll = () => {
-      if (isMenuOpen) return; // jangan disembunyiin pas menu mobile lagi kebuka
-      const currentY = window.scrollY;
-      const goingDown = currentY > lastScrollY.current;
-      const pastThreshold = currentY > HIDE_AFTER_PX;
+        const pastThreshold = self.scroll() > HIDE_AFTER_PX;
+        const goingDown = self.direction === 1;
 
-      if (goingDown && pastThreshold && !isHidden.current) {
-        isHidden.current = true;
-        gsap.to(navRef.current, { y: "-100%", duration: 0.45, ease: "power3.out" });
-      } else if ((!goingDown || !pastThreshold) && isHidden.current) {
-        isHidden.current = false;
-        gsap.to(navRef.current, { y: "0%", duration: 0.45, ease: "power3.out" });
-      }
+        if (goingDown && pastThreshold && !isHidden.current) {
+          isHidden.current = true;
+          gsap.to(navRef.current, { y: "-100%", duration: 0.45, ease: "power3.out", overwrite: true });
+        } else if ((!goingDown || !pastThreshold) && isHidden.current) {
+          isHidden.current = false;
+          gsap.to(navRef.current, { y: "0%", duration: 0.45, ease: "power3.out", overwrite: true });
+        }
+      },
+    });
 
-      lastScrollY.current = currentY;
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => st.kill();
   }, [isMenuOpen]);
 
-  /* buka/tutup mobile menu */
+  /* buka/tutup mobile menu — opacity + pointer-events (bukan display:none/flex,
+     yang gampang nubruk sama class Tailwind & gagal ke-override). */
   useLayoutEffect(() => {
     const el = menuRef.current;
     if (!el) return;
 
     if (isMenuOpen) {
-      gsap.set(el, { display: "flex" });
-      gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" });
+      gsap.to(el, { opacity: 1, duration: 0.35, ease: "power2.out", overwrite: true });
       gsap.fromTo(
         el.querySelectorAll(".mobile-link"),
         { opacity: 0, y: 16 },
         { opacity: 1, y: 0, duration: 0.4, stagger: 0.06, delay: 0.1, ease: "power3.out" }
       );
     } else {
-      gsap.to(el, {
-        opacity: 0,
-        duration: 0.25,
-        ease: "power2.in",
-        onComplete: () => gsap.set(el, { display: "none" }),
-      });
+      gsap.to(el, { opacity: 0, duration: 0.25, ease: "power2.in", overwrite: true });
     }
   }, [isMenuOpen]);
 
@@ -80,7 +78,7 @@ export default function Navbar() {
     <>
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-[900] flex items-center justify-between px-6 md:px-12 py-5 md:py-6 bg-neutral-800/10 backdrop-blur-sm border-b border-neutral-200/50 font-second"
+        className="fixed top-0 left-0 right-0 z-[900] flex items-center justify-between px-6 md:px-12 py-5 md:py-6 bg-neutral-800/10 backdrop-blur-sm border-b border-neutral-200/50 font-second will-change-transform"
       >
         {/* logo */}
         <Link
@@ -110,7 +108,7 @@ export default function Navbar() {
           onClick={() => setIsMenuOpen((v) => !v)}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMenuOpen}
-          className="md:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-[5px]"
+          className="md:hidden relative z-[910] w-8 h-8 flex flex-col items-center justify-center gap-[5px]"
         >
           <span
             className={`block h-px w-6 bg-neutral-50 transition-transform duration-300 ${
@@ -125,12 +123,12 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* mobile menu overlay — fullscreen, di luar <nav> biar animasi opacity-nya independen
-          dari hide/show navbar pas discroll */}
+      {/* mobile menu overlay — selalu ada di DOM, opacity + pointer-events dikontrol GSAP */}
       <div
         ref={menuRef}
-        className="hidden fixed inset-0 z-[890] bg-neutral-950 flex-col items-center justify-center gap-8 md:hidden"
-        style={{ display: "none" }}
+        className={`fixed inset-0 z-[890] bg-neutral-950 flex flex-col items-center justify-center gap-8 md:hidden opacity-0 ${
+          isMenuOpen ? "pointer-events-auto" : "pointer-events-none"
+        }`}
       >
         {NAV_LINKS.map((link) => (
           <Link
