@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef, useLayoutEffect } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,7 +8,6 @@ import { SlSocialLinkedin } from "react-icons/sl";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// samain sama contacts di BaseName
 const SOCIALS = [
   { name: "Instagram", href: "https://www.instagram.com/cehmenang", icon: SiInstagram },
   { name: "Linkedin", href: "https://www.linkedin.com/in/heaven-cehwin-703896238", icon: SlSocialLinkedin },
@@ -17,32 +15,8 @@ const SOCIALS = [
 ];
 
 export default function Footer() {
-  const footerRef = useRef<HTMLElement>(null);
-
-  /* reveal masuk/keluar viewport, dua arah — pola yang sama dipakai di section lain */
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".footer-item", {
-        opacity: 0,
-        y: 24,
-        duration: 0.6,
-        stagger: 0.08,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: "top 90%",
-          end: "bottom bottom",
-          toggleActions: "play reverse play reverse",
-        },
-      });
-    }, footerRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <footer
-      ref={footerRef}
       className="w-full bg-neutral-950 text-neutral-50 border-t border-neutral-800 px-6 md:px-12 py-10 md:py-12 font-[var(--font-second)]"
     >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
