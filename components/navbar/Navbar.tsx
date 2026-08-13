@@ -48,8 +48,6 @@ export default function Navbar() {
     return () => st.kill();
   }, [isMenuOpen]);
 
-  /* buka/tutup mobile menu — opacity + pointer-events (bukan display:none/flex,
-     yang gampang nubruk sama class Tailwind & gagal ke-override). */
   useLayoutEffect(() => {
     const el = menuRef.current;
     if (!el) return;
@@ -126,7 +124,7 @@ export default function Navbar() {
       {/* mobile menu overlay — selalu ada di DOM, opacity + pointer-events dikontrol GSAP */}
       <div
         ref={menuRef}
-        className={`fixed inset-0 z-[890] bg-neutral-950 flex flex-col items-center justify-center gap-8 md:hidden opacity-0 ${
+        className={`fixed z-[850] w-full h-dvh bg-neutral-950 flex flex-col items-center justify-center gap-8 md:hidden opacity-0 ${
           isMenuOpen ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >
