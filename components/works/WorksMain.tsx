@@ -112,7 +112,7 @@ export default function WorksMain() {
     <section
       ref={sectionRef}
       id="work"
-      className="relative w-full bg-neutral-950 text-neutral-50 px-6 md:px-12 my-40 md:my-10 py-24 md:py-32 overflow-hidden font-[var(--font-second)]"
+      className="relative w-full bg-neutral-950 text-neutral-50 px-6 md:px-12 mb-40 md:mb-10 pb-24 md:pb-32 overflow-hidden font-[var(--font-second)]"
     >
       {/* decorative background category stack */}
       <div
@@ -295,7 +295,7 @@ export default function WorksMain() {
       {/* lightbox untuk gallery design */}
       {activeTab === "Graphic Design" && lightboxIdx !== null && designItems[lightboxIdx] && (
         <div
-          className="fixed inset-0 z-50 bg-neutral-950/95 flex items-center justify-center p-6"
+          className="fixed inset-0 z-50 top-0 bg-neutral-950/95 flex items-center justify-center p-6"
           onClick={() => setLightboxIdx(null)}
         >
           <button

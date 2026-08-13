@@ -5,7 +5,7 @@ export default function ImageShader(){
         <FlutedGlass
   width={"100%"}
   height={"100%"}
-  image="/Hanni.webp"
+  image="/BGGweh.webp"
   colorBack="#00000000"
   colorShadow="#000000"
   colorHighlight="#ffffff"

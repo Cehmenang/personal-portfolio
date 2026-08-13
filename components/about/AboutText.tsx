@@ -10,19 +10,19 @@ const abouts = [
     number: "01",
     label: "Approach",
     text: "I'm Cehwin, a fullstack developer who likes understanding the full picture before writing a single line of code. I'm the type who'll dig into an edge case until it actually makes sense, not just until it stops throwing errors — debugging is half the job, and I don't mind spending time there.",
-    offset: "",
+    offset: "left-0 top-0",
   },
   {
     number: "02",
     label: "Structure",
     text: "I work best with a clear structure: separating concerns properly, keeping frontend and backend decoupled, and building things in a way my future self won't hate. I lean toward simplicity over cleverness, and I'd rather ship something solid than something flashy that breaks in three months.",
-    offset: "md:mt-16 md:pl-10",
+    offset: "left-[50%] top-[50%]",
   },
   {
     number: "03",
     label: "Curiosity",
     text: "I pick up new things fast, and I'm currently diving into AI integration — exploring RAG pipelines and how they can fit into real, production-level applications. Curious by nature, comfortable moving between frontend and backend, and always down to learn a new tool if it genuinely solves a problem.",
-    offset: "md:mt-6 md:pl-4",
+    offset: "right-0 bottom-0",
   },
 ]
 
@@ -65,22 +65,13 @@ export default function AboutText() {
   }, [])
 
   return (
-    <div ref={containerRef} className="flex flex-col gap-y-14 md:gap-y-6">
+    <div ref={containerRef} className="flex flex-col gap-y-14 md:gap-y-6 relative">
       {abouts.map((abt, idx) => (
         <div
           key={idx}
-          className={`flex flex-col sm:flex-row gap-4 sm:gap-8 max-w-2xl ${abt.offset}`}
+          className={`flex flex-col sm:flex-row gap-4 sm:gap-8 absolute ${abt.offset} right-0`}
         >
-          <div className="flex sm:flex-col items-baseline sm:items-start gap-3 sm:gap-1 shrink-0 sm:w-24">
-            <span className="font-primary font-extrabold text-lg text-neutral-600">
-              {abt.number}
-            </span>
-            <span className="text-xs uppercase tracking-wider text-neutral-400">
-              {abt.label}
-            </span>
-          </div>
-
-          <p className="split text-justify font-second text-base md:text-lg leading-relaxed text-neutral-200 tracking-tight">
+          <p className="split text-justify font-second text-base md:text-[22px] leading-relaxed text-neutral-400 tracking-tight">
             {abt.text}
           </p>
         </div>
