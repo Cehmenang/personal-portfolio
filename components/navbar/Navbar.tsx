@@ -14,6 +14,7 @@ const NAV_LINKS = [
 ];
 
 const HIDE_AFTER_PX = 80; // baru mulai sembunyi setelah scroll sejauh ini
+const NAVBAR_OFFSET = 88; // kira-kira tinggi navbar, biar section nggak ketutup pas landing
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
@@ -72,6 +73,26 @@ export default function Navbar() {
     };
   }, [isMenuOpen]);
 
+  /* scroll manual ke section — dipanggil tiap klik link hash, TERLEPAS dari
+     apakah hash di URL sekarang udah sama atau belum. Native <a href="#x">
+     cuma nge-scroll kalau hash-nya BERUBAH, makanya klik link yang sama dua
+     kali nggak ngapa-ngapain kalau diserahin ke browser. */
+  const scrollToSection = (href: string) => {
+    setIsMenuOpen(false);
+
+    const id = href.split("#")[1];
+    if (!id) return;
+
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    const top = target.getBoundingClientRect().top + window.scrollY - NAVBAR_OFFSET;
+    window.scrollTo({ top, behavior: "smooth" });
+
+    // update URL tanpa trigger native hash jump / re-render
+    window.history.pushState(null, "", `#${id}`);
+  };
+
   return (
     <>
       <nav
@@ -94,6 +115,10 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection(link.href);
+              }}
               className="text-sm uppercase tracking-wider text-neutral-50/70 hover:text-neutral-50 transition-colors duration-300"
             >
               {link.label}
@@ -132,7 +157,10 @@ export default function Navbar() {
           <Link
             key={link.href}
             href={link.href}
-            onClick={() => setIsMenuOpen(false)}
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection(link.href);
+            }}
             className="mobile-link font-primary font-extrabold text-3xl tracking-tight text-neutral-50"
           >
             {link.label}
