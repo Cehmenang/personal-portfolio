@@ -1,4 +1,5 @@
 import AboutSection from "@/components/about/AboutSection";
+import Footer from "@/components/footer/Footer";
 import BaseName from "@/components/name/BaseName";
 import Navbar from "@/components/navbar/Navbar";
 import WorksMain from "@/components/works/WorksMain";

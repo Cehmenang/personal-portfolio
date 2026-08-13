@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/scroll/SmoothScroll";
 import RouteTransitionOverlay from "@/components/RouteTransitionOverlay";
+import Footer from "@/components/footer/Footer";
 
 const primaryFont = Bricolage_Grotesque({
   variable: "--font-bricolage",
@@ -30,10 +31,11 @@ export default function RootLayout({
       className={`${primaryFont.variable} ${secondFont.variable} h-full antialiased bg-neutral-950`}
     >
       <body className="min-h-full flex flex-col bg-neutral-950">
-        {/* <SmoothScroll> */}
+        <SmoothScroll>
         <RouteTransitionOverlay/>
           {children}
-        {/* </SmoothScroll> */}
+        <Footer/>
+        </SmoothScroll>
       </body>
     </html>
   );
