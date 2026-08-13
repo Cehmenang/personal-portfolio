@@ -238,7 +238,7 @@ export default function ExperienceDetailView({ exp }: { exp: Experience }) {
 
       {/* footer nav */}
       <div className="mt-16 pt-8 border-t border-neutral-800">
-        <Link href="/work" className="text-sm text-neutral-500 hover:text-neutral-50 transition-colors">
+        <Link href="/#work" className="text-sm text-neutral-500 hover:text-neutral-50 transition-colors">
           ← All Work
         </Link>
       </div>

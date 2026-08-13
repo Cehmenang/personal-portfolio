@@ -390,7 +390,7 @@ export default function WebsiteDetailView({ site }: { site: FlatWebsite }) {
       )}
 
       <div className="mt-24 pt-8 border-t border-neutral-800 flex items-center justify-between">
-        <Link href="/work" className="text-sm text-neutral-500 hover:text-neutral-50 transition-colors">
+        <Link href="/#work" className="text-sm text-neutral-500 hover:text-neutral-50 transition-colors">
           ← All Work
         </Link>
         <Link
