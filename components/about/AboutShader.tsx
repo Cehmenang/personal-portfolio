@@ -3,7 +3,7 @@ import { LensDistortion } from '@paper-design/shaders-react';
 export default function AboutShader(){
     return (
         <LensDistortion
-  image="/About/AboutBG.webp"
+  image="/about/AboutBG.webp"
   spread={0.5}
   bias={0}
   angle={52}

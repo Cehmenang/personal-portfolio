@@ -12,7 +12,7 @@ export default function AboutSection() {
           About
         </span>
         <h2 className="font-primary font-extrabold text-4xl sm:text-5xl md:text-6xl tracking-tight">
-          Behind The Screen
+          Behind The <span className="italic">Screen</span>
         </h2>
       </div>
 
@@ -21,7 +21,7 @@ export default function AboutSection() {
         <div className="lg:sticky lg:top-32 h-fit">
           <div className="about-photo relative w-full mx-auto lg:mx-0 aspect-video bg-neutral-800 overflow-hidden gap-x-10">
                 <AboutShader/>
-                <img src={"/About/AboutGweh.webp"} className="w-full h-full object-cover absolute top-0 z-[1] grayscale"/>
+                <img src={"/about/AboutGweh.webp"} className="w-full h-full object-cover absolute top-0 z-[1] grayscale"/>
           </div>
         </div>
 
