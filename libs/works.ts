@@ -113,6 +113,8 @@ export const EXPERIENCES: Experience[] = [
           "/works/Net/NetPreview3.webp",
           "/works/Net/NetPreview4.webp",
           "/works/Net/NetPreview5.webp",
+          "/works/Net/NetPreview6.webp",
+          "/works/Net/NetPreview7.webp",
         ],
         feature: "Auth: JWT via httpOnly cookies + Passport, CORS with credentials, Image upload using Multer + sharp (convert to WebP), Product data model using native PostgreSQL string arrays, Order/create endpoint for checkout process, Admin dashboard: login form, product upload form, monochrome UI with GSAP animations, Next.js middleware for role-based route protection (including RSC/Server Action edge cases), Product creation flow: after POST, calls revalidateProducts() + router.push/router.refresh() to return to product list, Customer checkout page: select cart items via sessionStorage, recipient address form, payment method (bank transfer/COD), order summary with flat-rate shipping (placeholder pending RajaOngkir/Komerce integration)",
       },
