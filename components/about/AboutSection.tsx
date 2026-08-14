@@ -1,3 +1,4 @@
+import AboutShader from "./AboutShader"
 import AboutText from "./AboutText"
 
 export default function AboutSection() {
@@ -19,11 +20,8 @@ export default function AboutSection() {
         {/* photo — portrait, sticky di desktop */}
         <div className="lg:sticky lg:top-32 h-fit">
           <div className="about-photo relative w-full mx-auto lg:mx-0 aspect-video bg-neutral-800 overflow-hidden gap-x-10">
-            <img
-              src="/About/AboutBG.webp"
-              alt="Cehwin"
-              className="w-full h-full object-cover grayscale"
-            />
+                <AboutShader/>
+                <img src={"/About/AboutGweh.webp"} className="w-full h-full object-cover absolute top-0 z-[1] grayscale"/>
           </div>
         </div>
 

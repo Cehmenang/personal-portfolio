@@ -3,9 +3,7 @@ import { LensDistortion } from '@paper-design/shaders-react';
 export default function AboutShader(){
     return (
         <LensDistortion
-  width={1280}
-  height={720}
-  image="https://paper.design/flowers.webp"
+  image="/About/AboutBG.webp"
   spread={0.5}
   bias={0}
   angle={52}
@@ -27,6 +25,7 @@ export default function AboutShader(){
   imageX={0}
   imageY={0}
   fit="contain"
+  className='w-full h-full object-cover grayscale'
 />
     )
 }
