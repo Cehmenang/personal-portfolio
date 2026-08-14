@@ -54,7 +54,6 @@ export const EXPERIENCES: Experience[] = [
     designs: [
      
     ],
-    videos: [{ url: "https://drive.google.com/drive/folders/GANTI_DENGAN_ID_FOLDER" }],
   },
   {
     company: "Bandar Musik Jakarta",
@@ -125,7 +124,8 @@ export const EXPERIENCES: Experience[] = [
       "/gallery/BMJ/BMJ4.webp",
       "/gallery/BMJ/BMJ5.webp",
       "/gallery/BMJ/BMJ6.webp",
-    ]
+    ],
+    videos: [{ url: "https://drive.google.com/drive/folders/1qx4-ujwhSfe7sJnyITqG6Mstj2zhjdEj?usp=sharing" }],
   },
   {
     company: "Delta Musik",
@@ -146,7 +146,28 @@ export const EXPERIENCES: Experience[] = [
       "/gallery/Delta/Delta10.webp",
       "/gallery/Delta/Delta11.webp",
       "/gallery/Delta/Delta12.webp",
-    ]
+    ],
+    websites: [
+      {
+        name: "Delta Guitars",
+        slug: "delta-guitars",
+        url: "https://deltaguitars.id",
+        summary: "Net Musik is an e-commerce platform for musical instrument sales, built with a decoupled full-stack architecture: a NestJS backend (Prisma ORM + PostgreSQL) and a Next.js frontend. It features JWT-based authentication with httpOnly cookies, an admin dashboard for product management (with automatic image conversion to WebP on upload), and role-based access control via Next.js middleware.\n\nOn the customer side, there's a complete checkout flow — from selecting cart items, entering a shipping address, and choosing a payment method (bank transfer or COD), to an order summary and confirmation page. Shipping cost is currently a flat-rate placeholder, pending future integration with RajaOngkir/Komerce.",
+        stack: [
+          "Wordpress",
+          "Elementor",
+        ],
+        image: [
+          "/works/BMJ/BMJPreview.webp",
+          "/works/BMJ/BMJPreview2.webp",
+          "/works/BMJ/BMJPreview3.webp",
+          "/works/BMJ/BMJPreview4.webp",
+          "/works/BMJ/BMJPreview5.webp",
+        ],
+        feature: "Auth: JWT via httpOnly cookies + Passport, CORS with credentials, Image upload using Multer + sharp (convert to WebP), Product data model using native PostgreSQL string arrays, Order/create endpoint for checkout process, Admin dashboard: login form, product upload form, monochrome UI with GSAP animations, Next.js middleware for role-based route protection (including RSC/Server Action edge cases), Product creation flow: after POST, calls revalidateProducts() + router.push/router.refresh() to return to product list, Customer checkout page: select cart items via sessionStorage, recipient address form, payment method (bank transfer/COD), order summary with flat-rate shipping (placeholder pending RajaOngkir/Komerce integration)",
+      },
+    ],
+    
   },
 ];
 

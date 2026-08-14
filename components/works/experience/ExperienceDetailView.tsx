@@ -122,7 +122,7 @@ export default function ExperienceDetailView({ exp }: { exp: Experience }) {
           <h2 className="ed-section-heading text-sm uppercase tracking-[0.2em] text-neutral-500 mb-6">
             Website
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-neutral-800">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-neutral-950">
             {exp.websites.map((site) => (
               <Link
                 key={site.slug}
@@ -157,7 +157,7 @@ export default function ExperienceDetailView({ exp }: { exp: Experience }) {
           <h2 className="ed-section-heading text-sm uppercase tracking-[0.2em] text-neutral-500 mb-6">
             Graphic Design
           </h2>
-          <div ref={designRef} className="grid grid-cols-2 md:grid-cols-3 gap-px bg-neutral-800">
+          <div ref={designRef} className="grid grid-cols-2 md:grid-cols-3 gap-px bg-neutral-950">
             {exp.designs.map((img, idx) => (
               <button
                 key={img}
