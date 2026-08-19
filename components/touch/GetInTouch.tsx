@@ -8,16 +8,20 @@ import { FlutedGlass } from "@paper-design/shaders-react"
 gsap.registerPlugin(ScrollTrigger)
 
 const services = [
-  { value: "web", label: "Full-Stack Web Development" },
+  { value: "web", label: "Web Development" },
+  { value: "design", label: "Web Design" },
   { value: "video", label: "Video Editing" },
-  { value: "both", label: "Web Development + Video Editing" },
+  { value: "design", label: "Graphic Design" },
 ]
 
-const WHATSAPP_NUMBER = "6289503138950" // 089503138950 -> 62 prefix, no leading 0
+const WHATSAPP_NUMBER = "6289503138950"
 
 export default function GetInTouch() {
   const [name, setName] = useState("")
   const [service, setService] = useState(services[0].value)
+
+  // DEBUG: set true kalo mau liat garis start/end trigger-nya pas dev
+  const SHOW_SCROLLTRIGGER_MARKERS = false
 
   useEffect(() => {
     const mm = gsap.matchMedia()
@@ -38,54 +42,80 @@ export default function GetInTouch() {
           return
         }
 
+        // shader butuh waktu buat render/resize, refresh biar posisi trigger akurat
+        const refreshTimeout = setTimeout(() => ScrollTrigger.refresh(), 300)
+
+        // reveal sekali pas section pertama kali masuk viewport
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: ".get-in-touch",
-            start: "top 75%",
+            start: "top 85%",
             once: true,
+            markers: SHOW_SCROLLTRIGGER_MARKERS,
           },
         })
 
         tl.from(".git-shader-wrapper", {
           opacity: 0,
-          scale: 1.1,
-          duration: 1.2,
-          ease: "sine.out",
+          scale: 1.25,
+          duration: 1.4,
+          ease: "power2.out",
         })
           .from(
             ".git-header-text",
             {
               opacity: 0,
-              y: 24,
-              duration: 0.8,
+              y: 60,
+              duration: 1,
               ease: "expo.out",
             },
-            "<=.2"
+            "<=.15"
           )
           .from(
             ".git-field",
             {
               opacity: 0,
-              y: 20,
-              duration: 0.6,
-              stagger: 0.15,
-              ease: "sine.out",
+              y: 40,
+              duration: 0.7,
+              stagger: 0.18,
+              ease: "power3.out",
             },
-            "<=.3"
+            "-=.3"
           )
           .from(
             ".git-submit",
             {
               opacity: 0,
-              y: 20,
+              y: 40,
+              scale: 0.9,
               duration: 0.6,
-              ease: "sine.out",
+              ease: "back.out(1.7)",
             },
-            "<=.1"
+            "-=.2"
           )
 
+        const parallax = gsap.fromTo(
+          ".git-parallax",
+          { yPercent: 0 },
+          {
+            yPercent: -18,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".get-in-touch",
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.6,
+              markers: SHOW_SCROLLTRIGGER_MARKERS,
+            },
+          }
+        )
+
         return () => {
+          clearTimeout(refreshTimeout)
+          tl.scrollTrigger?.kill()
           tl.kill()
+          parallax.scrollTrigger?.kill()
+          parallax.kill()
         }
       }
     )
@@ -111,13 +141,12 @@ export default function GetInTouch() {
 
   return (
     <section className="get-in-touch relative bg-neutral-950 w-full overflow-hidden">
-      {/* Header with FlutedGlass shader background */}
       <div className="relative w-full h-[140px] sm:h-[170px] lg:h-[200px] flex items-center justify-center overflow-hidden border-t border-b border-neutral-800">
         <div className="git-shader-wrapper absolute inset-0 w-full h-full">
           <FlutedGlass
             width={1280}
             height={200}
-            image="https://paper.design/flowers.webp"
+            image="/about/AboutBG.webp"
             colorBack="#7d7d7d00"
             colorShadow="#000000"
             colorHighlight="#ffffff"
