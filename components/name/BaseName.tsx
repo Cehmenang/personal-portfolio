@@ -23,6 +23,7 @@ export default function BaseName() {
   useEffect(() => {
     const mm = gsap.matchMedia()
 
+    // target fontSize & gap beda per breakpoint
     mm.add(
       {
         isMobile: "(max-width: 639px)",
@@ -35,53 +36,37 @@ export default function BaseName() {
           isTablet: boolean
         }
 
-        // Menghitung target rasio Scale pengganti fontSize
-        // Asumsi base fontSize dari Tailwind: Mobile 36px, Tablet 56px, Desktop 80px
-        const targetScale = isMobile ? 1.11 : isTablet ? 1.28 : 1.6
-        
-        // Menghitung target jarak pengganti gap
-        const xOffset = isMobile ? 20 : isTablet ? 75 : 150
+        const targetFontSize = isMobile ? "40px" : isTablet ? "72px" : "128px"
+        const targetGap = isMobile ? "40" : isTablet ? "150" : "300"
 
         const tl = gsap.timeline()
         tl.from(".front-name", {
           opacity: 0,
           duration: .5,
           stagger: .07,
-          y: 30,
-          force3D: true // Memaksa GSAP menggunakan GPU
+          y: 30
         })
         .from(".back-name", {
           opacity: 0,
           duration: .5,
           stagger: .07,
-          y: 30,
-          force3D: true
+          y: 30
         }, "<=.4")
         .to(".base-name-inner", {
-          scale: targetScale,
+          fontSize: targetFontSize,
           duration: 1,
-          force3D: true,
-          transformOrigin: "center center"
         }, "<=1")
         .addLabel("reveal", "<=1")
-        .to(".depan-first", {
-          x: -xOffset, // Menggeser nama depan ke kiri
+        .to(".base-name-inner", {
+          gap: targetGap,
           duration: .5,
-          ease: "sine",
-          force3D: true
-        }, "reveal")
-        .to(".depan-last", {
-          x: xOffset, // Menggeser nama belakang ke kanan
-          duration: .5,
-          ease: "sine",
-          force3D: true
+          ease: "sine"
         }, "reveal")
         .from(".base-shown", {
           rotate: 6,
           scale: 0,
           duration: 1.5,
-          ease: "expo.inOut",
-          force3D: true
+          ease: "expo.inOut"
         }, "reveal")
         .to(".front-name, .back-name", {
           color: "#ffffff",
@@ -104,7 +89,6 @@ export default function BaseName() {
     const parallax = gsap.to(".image-shader-wrapper", {
       y: "20%",
       ease: "none",
-      force3D: true,
       scrollTrigger: {
         trigger: ".base",
         start: "top top",
@@ -124,33 +108,34 @@ export default function BaseName() {
   return (
     <div className="base relative bg-neutral-950 h-dvh overflow-hidden">
 
-      {/* Dihapus: maskImage/WebkitMaskImage via style */}
-      <div className="base-shown w-full bg-neutral-950 absolute inset-0 brightness-75 hue-shift overflow-hidden h-[110dvh] will-change-transform">
-        {/* Tambah will-change-transform karena ini di-scroll parallax */}
-        <div className="absolute inset-0 image-shader-wrapper will-change-transform">
+      <div
+        className="base-shown w-full bg-neutral-950 absolute inset-0 brightness-75 hue-shift overflow-hidden"
+        style={{
+          height: "110dvh",
+          maskImage: "linear-gradient(to bottom, black 0%, black 80%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 80%, transparent 100%)"
+        }}
+      >
+        <div className="absolute inset-0 image-shader-wrapper">
           <ImageShader />
         </div>
-        {/* Dihapus: class mix-blend-screen */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 mix-blend-screen">
           <ShaderBackground />
         </div>
       </div>
 
       <div className="base-name w-full h-dvh flex flex-col items-center justify-center absolute px-4">
 
-        {/* Tambah will-change-transform di container yang di-scale */}
-        <div className="base-name-inner font-primary flex flex-wrap items-center justify-center text-[36px] sm:text-[56px] lg:text-[80px] gap-x-4 sm:gap-x-6 lg:gap-x-10 tracking-tighter text-center will-change-transform">
+        <div className="base-name-inner font-primary flex flex-wrap items-center justify-center text-[36px] sm:text-[56px] lg:text-[80px] gap-x-4 sm:gap-x-6 lg:gap-x-10 tracking-tighter text-center">
 
-          {/* Dihapus: class mix-blend-difference | Ditambah: class depan-first untuk targeting GSAP */}
-          <div className="depan depan-first flex will-change-transform">
+          <div className="depan flex">
             {front.map((txt: string, idx: number) => (
-              <h1 key={idx} className="front-name text-neutral-50">{txt}</h1>
+              <h1 key={idx} className="front-name text-neutral-50 mix-blend-difference">{txt}</h1>
             ))}
           </div>
-          {/* Dihapus: class mix-blend-difference | Ditambah: class depan-last untuk targeting GSAP */}
-          <div className="depan depan-last flex will-change-transform">
+          <div className="depan flex">
             {back.map((txt: string, idx: number) => (
-              <h1 key={idx} className="back-name text-neutral-50">{txt}</h1>
+              <h1 key={idx} className="back-name text-neutral-50 mix-blend-difference">{txt}</h1>
             ))}
           </div>
 
@@ -164,8 +149,7 @@ export default function BaseName() {
                 key={idx}
                 href={ctx.link}
                 target="_blank"
-                // Dihapus: class mix-blend-difference
-                className={`contact-item text-neutral-50 font-primary tracking-tight border-2 border-neutral-50 py-1 w-full sm:w-72 text-center rounded-full text-[16px] sm:text-[20px] transition ${offsetY} ${idx !== 0 ? "sm:-ml-10" : ""} ${idx % 2 == 0 ? "hover:bg-neutral-50 hover:text-neutral-950" : "bg-neutral-50 text-neutral-950 hover:bg-neutral-800/20 hover:text-neutral-50"}`}
+                className={`contact-item text-neutral-50 font-primary tracking-tight border-2 border-neutral-50 py-1 w-full sm:w-72 text-center rounded-full text-[16px] sm:text-[20px] mix-blend-difference transition ${offsetY} ${idx !== 0 ? "sm:-ml-10" : ""} ${idx % 2 == 0 ? "hover:bg-neutral-50 hover:text-neutral-950" : "bg-neutral-50 text-neutral-950 hover:bg-neutral-800/20 hover:text-neutral-50"}`}
               >
                 {ctx.name}
               </Link>
