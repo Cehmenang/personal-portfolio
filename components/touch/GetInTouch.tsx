@@ -140,7 +140,7 @@ export default function GetInTouch() {
   }
 
   return (
-    <section className="get-in-touch relative bg-neutral-950 w-full overflow-hidden">
+    <section className="get-in-touch relative bg-neutral-950 w-full overflow-hidden py-16 md:py-10">
       <div className="relative w-full h-[140px] sm:h-[170px] lg:h-[200px] flex items-center justify-center overflow-hidden border-t border-b border-neutral-800">
         <div className="git-shader-wrapper absolute inset-0 w-full h-full">
           <FlutedGlass
@@ -196,7 +196,7 @@ export default function GetInTouch() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. Budi Santoso"
+              placeholder="e.g. Heaven Cehwin"
               className="font-second bg-transparent border-b-2 border-neutral-800 focus:border-neutral-50 outline-none text-neutral-50 placeholder:text-neutral-700 py-2 text-base transition-colors"
               required
             />
