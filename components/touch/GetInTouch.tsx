@@ -1,0 +1,208 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { FlutedGlass } from "@paper-design/shaders-react"
+
+gsap.registerPlugin(ScrollTrigger)
+
+const services = [
+  { value: "web", label: "Full-Stack Web Development" },
+  { value: "video", label: "Video Editing" },
+  { value: "both", label: "Web Development + Video Editing" },
+]
+
+const WHATSAPP_NUMBER = "6289503138950" // 089503138950 -> 62 prefix, no leading 0
+
+export default function GetInTouch() {
+  const [name, setName] = useState("")
+  const [service, setService] = useState(services[0].value)
+
+  useEffect(() => {
+    const mm = gsap.matchMedia()
+
+    mm.add(
+      {
+        reduceMotion: "(prefers-reduced-motion: reduce)",
+      },
+      (context) => {
+        const { reduceMotion } = context.conditions as { reduceMotion: boolean }
+
+        if (reduceMotion) {
+          gsap.set(".git-header-text, .git-shader-wrapper, .git-field, .git-submit", {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          })
+          return
+        }
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".get-in-touch",
+            start: "top 75%",
+            once: true,
+          },
+        })
+
+        tl.from(".git-shader-wrapper", {
+          opacity: 0,
+          scale: 1.1,
+          duration: 1.2,
+          ease: "sine.out",
+        })
+          .from(
+            ".git-header-text",
+            {
+              opacity: 0,
+              y: 24,
+              duration: 0.8,
+              ease: "expo.out",
+            },
+            "<=.2"
+          )
+          .from(
+            ".git-field",
+            {
+              opacity: 0,
+              y: 20,
+              duration: 0.6,
+              stagger: 0.15,
+              ease: "sine.out",
+            },
+            "<=.3"
+          )
+          .from(
+            ".git-submit",
+            {
+              opacity: 0,
+              y: 20,
+              duration: 0.6,
+              ease: "sine.out",
+            },
+            "<=.1"
+          )
+
+        return () => {
+          tl.kill()
+        }
+      }
+    )
+
+    return () => {
+      mm.revert()
+    }
+  }, [])
+
+  const isValid = name.trim().length > 0
+
+  const buildWhatsAppLink = () => {
+    const serviceLabel = services.find((s) => s.value === service)?.label ?? ""
+    const message = `Hello, my name is ${name.trim()}, and I need your service for ${serviceLabel}. Please reply to my message as soon as possible, thank you.`
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!isValid) return
+    window.open(buildWhatsAppLink(), "_blank")
+  }
+
+  return (
+    <section className="get-in-touch relative bg-neutral-950 w-full overflow-hidden">
+      {/* Header with FlutedGlass shader background */}
+      <div className="relative w-full h-[140px] sm:h-[170px] lg:h-[200px] flex items-center justify-center overflow-hidden border-t border-b border-neutral-800">
+        <div className="git-shader-wrapper absolute inset-0 w-full h-full">
+          <FlutedGlass
+            width={1280}
+            height={200}
+            image="https://paper.design/flowers.webp"
+            colorBack="#7d7d7d00"
+            colorShadow="#000000"
+            colorHighlight="#ffffff"
+            size={0.85}
+            shadows={0}
+            highlights={0}
+            shape="pattern"
+            angle={46}
+            distortionShape="prism"
+            distortion={1}
+            shift={-0.14}
+            stretch={1}
+            blur={1}
+            edges={1}
+            margin={0}
+            grainMixer={0.26}
+            grainOverlay={0.23}
+            scale={4}
+            fit="contain"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <h2 className="git-header-text relative z-10 font-primary text-neutral-50 mix-blend-difference text-[32px] sm:text-[48px] lg:text-[72px] tracking-tighter text-center px-4">
+          Get In Touch
+        </h2>
+      </div>
+
+      {/* Form */}
+      <div className="w-full flex flex-col items-center py-12 sm:py-20 lg:py-24 px-4 sm:px-6">
+        <p className="git-field font-second text-neutral-400 text-sm sm:text-base text-center max-w-xs sm:max-w-md mb-8 sm:mb-10">
+          Tell me your name and what you need, I&apos;ll get your message directly on WhatsApp.
+        </p>
+
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-sm sm:max-w-md flex flex-col gap-5 sm:gap-6"
+        >
+          <div className="git-field flex flex-col gap-2">
+            <label
+              htmlFor="name"
+              className="font-second text-neutral-500 text-xs uppercase tracking-wide"
+            >
+              Your Name
+            </label>
+            <input
+              id="name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="e.g. Budi Santoso"
+              className="font-second bg-transparent border-b-2 border-neutral-800 focus:border-neutral-50 outline-none text-neutral-50 placeholder:text-neutral-700 py-2 text-base transition-colors"
+              required
+            />
+          </div>
+
+          <div className="git-field flex flex-col gap-2">
+            <label
+              htmlFor="service"
+              className="font-second text-neutral-500 text-xs uppercase tracking-wide"
+            >
+              Service Needed
+            </label>
+            <select
+              id="service"
+              value={service}
+              onChange={(e) => setService(e.target.value)}
+              className="font-second bg-neutral-950 border-b-2 border-neutral-800 focus:border-neutral-50 outline-none text-neutral-50 py-2 text-base transition-colors appearance-none cursor-pointer"
+            >
+              {services.map((s) => (
+                <option key={s.value} value={s.value} className="bg-neutral-950">
+                  {s.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            disabled={!isValid}
+            className="git-submit font-primary tracking-tight border-2 border-neutral-50 py-3 mt-2 sm:mt-4 w-full text-center rounded-full text-[15px] sm:text-[18px] text-neutral-50 transition hover:bg-neutral-50 hover:text-neutral-950 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-neutral-50"
+          >
+            Chat on WhatsApp
+          </button>
+        </form>
+      </div>
+    </section>
+  )
+}
