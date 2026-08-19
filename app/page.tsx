@@ -8,16 +8,16 @@ import WorksMain from "@/components/works/WorksMain";
 
 export default function Main(){
   return (
-    <VanillaScroll>
-
+    
     <div className="main flex flex-col gap-y-40 bg-neutral-950 text-neutral-50">
+      <VanillaScroll>
       <Navbar/>
       <BaseName/>
       <AboutSection/>
       <WorksMain/>
       <GetInTouch/>
+    </VanillaScroll>
     </div>
 
-    </VanillaScroll>
   )
 }
