@@ -176,7 +176,7 @@ export default function GetInTouch() {
 
       {/* Form */}
       <div className="w-full flex flex-col items-center py-12 sm:py-20 lg:py-24 px-4 sm:px-6">
-        <p className="git-field font-second text-neutral-400 text-sm sm:text-base text-center max-w-xs sm:max-w-md mb-8 sm:mb-10">
+        <p className="git-field capitalize font-second text-neutral-400 text-sm sm:text-base text-center max-w-xs sm:max-w-md mb-8 sm:mb-10">
           Tell me your name and what you need, I&apos;ll get your message directly on WhatsApp.
         </p>
 
