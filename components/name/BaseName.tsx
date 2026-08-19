@@ -109,12 +109,7 @@ export default function BaseName() {
     <div className="base relative bg-neutral-950 h-dvh overflow-hidden">
 
       <div
-        className="base-shown w-full bg-neutral-950 absolute inset-0 brightness-75 hue-shift overflow-hidden"
-        style={{
-          height: "110dvh",
-          maskImage: "linear-gradient(to bottom, black 0%, black 80%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 80%, transparent 100%)"
-        }}
+        className="base-shown w-full h-dvh bg-neutral-950 absolute inset-0 brightness-75 hue-shift overflow-hidden"
       >
         <div className="absolute inset-0 image-shader-wrapper">
           <ImageShader />
@@ -130,12 +125,12 @@ export default function BaseName() {
 
           <div className="depan flex">
             {front.map((txt: string, idx: number) => (
-              <h1 key={idx} className="front-name text-neutral-50 mix-blend-difference">{txt}</h1>
+              <h1 key={idx} className="front-name text-neutral-50">{txt}</h1>
             ))}
           </div>
           <div className="depan flex">
             {back.map((txt: string, idx: number) => (
-              <h1 key={idx} className="back-name text-neutral-50 mix-blend-difference">{txt}</h1>
+              <h1 key={idx} className="back-name text-neutral-50">{txt}</h1>
             ))}
           </div>
 
