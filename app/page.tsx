@@ -10,13 +10,11 @@ export default function Main(){
   return (
     
     <div className="main flex flex-col gap-y-40 bg-neutral-950 text-neutral-50">
-      <VanillaScroll>
       <Navbar/>
       <BaseName/>
       <AboutSection/>
       <WorksMain/>
       <GetInTouch/>
-    </VanillaScroll>
     </div>
 
   )
