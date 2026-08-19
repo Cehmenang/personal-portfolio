@@ -146,7 +146,7 @@ export default function GetInTouch() {
           <FlutedGlass
             width={1280}
             height={200}
-            image="/about/AboutBG.webp"
+            image="/BGGweh.webp"
             colorBack="#7d7d7d00"
             colorShadow="#000000"
             colorHighlight="#ffffff"
