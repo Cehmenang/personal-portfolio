@@ -6,11 +6,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/**
- * Reveals every element matching `itemSelector` inside the returned container
- * ref. Replays on the way in AND the way out, from either scroll direction —
- * attach the returned ref to whatever wraps the items (grid, list, etc).
- */
 export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
   itemSelector: string,
   yOffset = 24
