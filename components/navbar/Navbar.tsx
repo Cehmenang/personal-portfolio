@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 const NAV_LINKS = [
   { label: "About", href: "/#about" },
   { label: "Work", href: "/#work" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 const HIDE_AFTER_PX = 80; // baru mulai sembunyi setelah scroll sejauh ini

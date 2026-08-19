@@ -140,7 +140,7 @@ export default function GetInTouch() {
   }
 
   return (
-    <section className="get-in-touch relative bg-neutral-950 w-full overflow-hidden py-16 md:py-10">
+    <section className="get-in-touch relative bg-neutral-950 w-full overflow-hidden py-16 md:py-10" id="contact">
       <div className="relative w-full h-[140px] sm:h-[170px] lg:h-[200px] flex items-center justify-center overflow-hidden border-t border-b border-neutral-800">
         <div className="git-shader-wrapper absolute inset-0 w-full h-full">
           <FlutedGlass
