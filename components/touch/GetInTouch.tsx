@@ -14,6 +14,21 @@ const services = [
   { value: "design", label: "Graphic Design" },
 ]
 
+const platforms = [
+  {
+    label: "Contra",
+    href: "https://contra.com/cehwin_epqo0r32?referralExperimentNid=DEFAULT_REFERRAL_PROGRAM&referrerUsername=cehwin_epqo0r32",
+  },
+  {
+    label: "Upwork",
+    href: "https://www.upwork.com/freelancers/~01bdb5d56698b1951d?mp_source=share",
+  },
+  {
+    label: "Fastwork",
+    href: "https://fastwork.id/byob/IjCvppatT4?openExternalBrowser=1",
+  },
+]
+
 const WHATSAPP_NUMBER = "6289503138950"
 
 export default function GetInTouch() {
@@ -34,11 +49,14 @@ export default function GetInTouch() {
         const { reduceMotion } = context.conditions as { reduceMotion: boolean }
 
         if (reduceMotion) {
-          gsap.set(".git-header-text, .git-shader-wrapper, .git-field, .git-submit", {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-          })
+          gsap.set(
+            ".git-header-text, .git-shader-wrapper, .git-field, .git-submit, .git-platforms",
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+            }
+          )
           return
         }
 
@@ -92,6 +110,16 @@ export default function GetInTouch() {
               ease: "back.out(1.7)",
             },
             "-=.2"
+          )
+          .from(
+            ".git-platforms",
+            {
+              opacity: 0,
+              y: 24,
+              duration: 0.6,
+              ease: "power3.out",
+            },
+            "-=.25"
           )
 
         const parallax = gsap.fromTo(
@@ -231,6 +259,46 @@ export default function GetInTouch() {
             Chat on WhatsApp
           </button>
         </form>
+
+        {/* Also reach me on */}
+        <div className="git-platforms w-full max-w-sm sm:max-w-md flex flex-col items-center mt-10 sm:mt-12">
+          <div className="flex items-center gap-3 w-full mb-5 sm:mb-6">
+            <span className="h-px flex-1 bg-neutral-800" />
+            <span className="font-second text-neutral-500 text-xs uppercase tracking-wide shrink-0">
+              Or find me on
+            </span>
+            <span className="h-px flex-1 bg-neutral-800" />
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+            {platforms.map((p) => (
+              <a
+                key={p.label}
+                href={p.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group font-second inline-flex items-center gap-1.5 border border-neutral-800 rounded-full pl-4 pr-3 py-2 text-neutral-300 text-sm transition-colors hover:border-neutral-50 hover:bg-neutral-50 hover:text-neutral-950"
+              >
+                {p.label}
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                >
+                  <path
+                    d="M3 9L9 3M9 3H4M9 3V8"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )
